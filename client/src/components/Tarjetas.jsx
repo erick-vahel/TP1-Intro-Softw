@@ -1,17 +1,21 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import "./Tarjeta.css"
 
 function Tarjetas() {
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card className='tarjeta-granja' style={{ width: '18rem' }}>
       <Card.Img variant="top" src="holder.js/100px180" />
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
+        <Card.Title>Granca 1</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
+          Detalles:
+            - creacion
+            - crecimiento
+            - estado
         </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        <Button variant="primary">Entrar</Button>
+        <Button variant="danger">Eliminar</Button>
       </Card.Body>
     </Card>
   );
