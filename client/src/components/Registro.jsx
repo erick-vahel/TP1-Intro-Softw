@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
-import {useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {useNavigate,  useParams} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Registro = () => {
   const [nombre, setNombre] = useState('');
+  const [esActualizar, setEsActualizar] = useState(false);
+
   const navigate = useNavigate();
+  const params = useParams();
+
   const handleNameChange = (e) => {
     setNombre(e.target.value);
   };
@@ -36,14 +40,50 @@ const Registro = () => {
     }
   };
 
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    const apiUrl = `http://127.0.0.1:5000/perfiles/${params.id}`; 
+    const formData = { nombre }; 
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al modificar usuario en db');
+      }
+
+      // Aquí puedes manejar la respuesta si es necesario
+      console.log('Usuario modificado correctamente');
+      navigate('/perfiles');
+    } catch (error) {
+      console.error('Error al modificar usuario:', error);
+    }
+  };
+
+
+  useEffect(() => {
+
+    if (params.id) {
+        setEsActualizar(true);
+    } 
+}, [params.id]);
+
   return (
     <div className="container mt-4">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card">
-            <div className="card-header">Crear Usuario</div>
+            <div className="card-header">{esActualizar?"Actualizando":"Crear"} Usuario</div>
             <div className="card-body">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={esActualizar?handleUpdate:handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="nombre" className="form-label">Nombre</label>
                   <input
@@ -55,7 +95,7 @@ const Registro = () => {
                     required
                   />
                 </div>
-                <button type="submit" className="btn btn-primary">Crear Usuario</button>
+                <button type="submit" className="btn btn-primary">{esActualizar?"Actualizar":"Crear"} Usuario</button>
               </form>
             </div>
           </div>

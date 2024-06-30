@@ -15,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/registro" element={<Registro />}/>
           <Route path="/perfiles" element={<Perfiles />}/>
+          <Route path="/registro/:id" element={<Registro />}/>
           <Route path="/" element={<h1>Bienvenido</h1>}/>
         </Routes>
       </BrowserRouter>

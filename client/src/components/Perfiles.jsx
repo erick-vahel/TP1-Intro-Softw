@@ -58,7 +58,7 @@ const Perfiles = () => {
                 <h4>{user.nombre}</h4>
                 <p>Monedas: {user.monedas}</p>
                 <p>Fecha de Registro: {user.fecha_registro}</p>
-                <Link className='btn btn-primary' to={`/perfiles/${user.id}`}>Modificar</Link>
+                <Link className='btn btn-primary' to={`/registro/${user.id}`}>Modificar</Link>
                 <Button onClick={()=>eliminarUsuario(user.id)} variant="outline-danger">Eliminar</Button>
               </div>
             </div>
