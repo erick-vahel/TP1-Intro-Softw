@@ -12,7 +12,7 @@ const Registro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const apiUrl = 'http://127.0.0.1:5000/inicio'; 
+    const apiUrl = 'http://127.0.0.1:5000/registro'; 
     const formData = { nombre }; 
 
     try {
