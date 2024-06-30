@@ -6,6 +6,8 @@ from app.models import Usuarios
 
 from flask import current_app as app
 
+import pytz
+
 # app = Flask(__name__)
 
 @app.route("/")
@@ -30,4 +32,24 @@ def example_route():
 
     elif request.method == 'GET':
         entries = Usuarios.query.all()
-        return jsonify([{'id': entry.id, 'nombre': entry.nombre, 'monedas': entry.monedas, 'fecha_registro': entry.fecha_registro} for entry in entries]), 200
+        user_list = []
+        target_timezone = pytz.timezone('America/Argentina/Buenos_Aires') 
+        for user in entries:
+            # Convertir y formatear la fecha de registro
+            if user.fecha_registro:
+                utc_date = user.fecha_registro.replace(tzinfo=pytz.utc)
+                localized_date = utc_date.astimezone(target_timezone)
+                fecha_formateada = localized_date.strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                fecha_formateada = None
+            
+            user_data = {
+                'id': user.id,
+                'nombre': user.nombre,
+                'monedas': user.monedas,
+                'fecha_registro': fecha_formateada
+            }
+            user_list.append(user_data)
+        
+        return jsonify(user_list)
+        # return jsonify([{'id': entry.id, 'nombre': entry.nombre, 'monedas': entry.monedas, 'fecha_registro': entry.fecha_registro} for entry in entries]), 200
