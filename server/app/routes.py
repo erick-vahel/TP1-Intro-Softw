@@ -25,6 +25,7 @@ def home():
 def example_route():
     if request.method == 'POST':
         data = request.json
+        print(data)
         new_entry = Usuarios(nombre=data['nombre'])
         db.session.add(new_entry)
         db.session.commit()
