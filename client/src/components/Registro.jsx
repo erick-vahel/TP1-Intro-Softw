@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import {useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Registro = () => {
   const [nombre, setNombre] = useState('');
-
+  const navigate = useNavigate();
   const handleNameChange = (e) => {
     setNombre(e.target.value);
   };
@@ -29,6 +30,7 @@ const Registro = () => {
 
       // Aquí puedes manejar la respuesta si es necesario
       console.log('Usuario creado correctamente');
+      navigate('/perfiles');
     } catch (error) {
       console.error('Error al crear usuario:', error);
     }
