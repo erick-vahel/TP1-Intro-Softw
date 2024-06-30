@@ -1,1 +1,4 @@
 server/venv
+
+# Archivos compilados de Python
+server/app/__pycache__

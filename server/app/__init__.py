@@ -15,7 +15,7 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        # from app import routes, models
+        from app import routes, models
         db.create_all()
 
     return app
