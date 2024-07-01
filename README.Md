@@ -4,8 +4,9 @@
     - pip install flask
 
 1. 
+
+    - cd sever
     - source venv/bin/activate
-    - cd backend
     - flask run --debug
 
 
