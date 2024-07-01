@@ -1,5 +1,9 @@
 
 #tablero{
+    opacity: 0.3;
+}
+
+#tablero > h2 {
     text-align: center;
 }
 
