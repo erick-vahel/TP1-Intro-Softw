@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 const Perfiles = () => {
   const [users, setUsers] = useState([]);
-  const navigate = useNavigate();
+  const [actualizarUsuarios, setActualizarUsuarios] = useState(false);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+    setActualizarUsuarios(false);
+  }, [actualizarUsuarios]);
 
   const fetchUsers = async () => {
     const apiUrl = 'http://127.0.0.1:5000/perfiles'; // Reemplaza con tu URL de API
@@ -41,7 +42,7 @@ const Perfiles = () => {
 
       // Aquí puedes manejar la respuesta si es necesario
       console.log('Usuario eliminado correctamente');
-      navigate('/perfiles');
+      setActualizarUsuarios(true);
     } catch (error) {
       console.error('Error al eliminar usuario:', error);
     }
