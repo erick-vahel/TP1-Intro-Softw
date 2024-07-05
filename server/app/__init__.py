@@ -14,11 +14,11 @@ from app.routes import register_blueprints
 """ from app.extensions import db """
 
 
-load_dotenv()
-
-db = SQLAlchemy()
 
 def create_app():
+    load_dotenv()
+
+    db = SQLAlchemy()
     app = Flask(__name__)
     app.config.from_object(Config)
     CORS(app)

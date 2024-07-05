@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
+from flask import current_app as app
 from app import db
 from app.models import Usuarios
 import pytz
-from flask import current_app as app
 
 usuarios_bp = Blueprint('usuarios', __name__)
 
