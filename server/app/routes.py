@@ -2,6 +2,7 @@ from flask import request, jsonify
 # from flask import Flask
 from app import db
 from app.models import Usuarios
+from app.models import Granjas
 from sqlalchemy.exc import SQLAlchemyError
 # from app import create_app
 
@@ -30,6 +31,44 @@ def registro():
     db.session.commit()
     return jsonify({'message': 'New entry created'}), 201
 
+
+@app.route('/granja/registro', methods=['POST'])
+def registrarGranja():
+    try:
+        data = request.json
+        param_id = data['id']
+        new_entry = Granjas(usuario_id=param_id)
+        db.session.add(new_entry)
+        db.session.commit()
+        return jsonify({'message': 'Nueva granja agregada para'+str(data['id'])}), 201
+    except KeyError as e:
+        db.session.rollback()
+        return jsonify({'error': 'Faltan datos requeridos', 'detalles': str(e)}), 400
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': 'Error al crear granja', 'detalles': str(e)}), 500
+
+
+@app.route('/granjas', methods=['GET'])
+def granjas():
+    entries = Granjas.query.order_by(Granjas.fecha_registro).all()
+    granjas_list = []
+    target_timezone = pytz.timezone('America/Argentina/Buenos_Aires') 
+    for granja in entries:
+        if granja.fecha_registro:
+            utc_date = granja.fecha_registro.replace(tzinfo=pytz.utc)
+            localized_date = utc_date.astimezone(target_timezone)
+            fecha_formateada = localized_date.strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            fecha_formateada = None
+        
+        granja_data = {
+            'id': granja.id,
+            'fecha_registro': fecha_formateada,
+            'usuario_id':granja.usuario_id
+        }
+        granjas_list.append(granja_data)
+    return jsonify(granjas_list)
 
 
 @app.route('/perfiles', methods=['GET'])
