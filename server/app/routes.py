@@ -2,6 +2,7 @@ from flask import request, jsonify
 # from flask import Flask
 from app import db
 from app.models import Usuarios
+from sqlalchemy.exc import SQLAlchemyError
 # from app import create_app
 
 from flask import current_app as app
@@ -66,7 +67,7 @@ def eliminar_usuario(id):
             return jsonify({'mensaje': 'Usuario eliminado correctamente'}), 200
         else:
             return jsonify({'error': 'Usuario no encontrado'}), 404
-    except exc.SQLAlchemyError as e:
+    except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({'error': 'Error al eliminar usuario', 'detalles': str(e)}), 500
 
@@ -86,6 +87,6 @@ def actualizar_usuario(id):
                 return jsonify({'error': 'Falta el campo "nombre" en la solicitud'}), 400
         else:
             return jsonify({'error': 'Usuario no encontrado'}), 404
-    except exc.SQLAlchemyError as e:
+    except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({'error': 'Error al actualizar el nombre del usuario', 'detalles': str(e)}), 500
