@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import {useNavigate,  useParams} from 'react-router-dom';
+import {useLocation, useNavigate,  useParams} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Registro = () => {
   const [nombre, setNombre] = useState('');
   const [esActualizar, setEsActualizar] = useState(false);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const navigate = useNavigate();
-  const params = useParams();
+  const urlParams = useParams();
 
   const handleNameChange = (e) => {
     setNombre(e.target.value);
@@ -44,7 +46,7 @@ const Registro = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    const apiUrl = `http://127.0.0.1:5000/perfiles/${params.id}`; 
+    const apiUrl = `http://127.0.0.1:5000/perfiles/${urlParams.id}`; 
     const formData = { nombre }; 
 
     try {
@@ -71,8 +73,9 @@ const Registro = () => {
 
   useEffect(() => {
 
-    if (params.id) {
+    if (urlParams.id) {
         setEsActualizar(true);
+        setNombre(params.get("nombre"));
     } 
 }, [params.id]);
 
