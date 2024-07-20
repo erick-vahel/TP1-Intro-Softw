@@ -11,12 +11,11 @@ function App() {
     <>
       <BrowserRouter>
         <Navegador />
-          {/* <Tablero/> */}
         <Routes>
           <Route path="/registro" element={<Registro />}/>
           <Route path="/perfiles" element={<Perfiles />}/>
           <Route path="/registro/:id" element={<Registro />}/>
-          <Route path="/" element={<h1>Bienvenido</h1>}/>
+          <Route path="/" element={<Tablero/>}/>
         </Routes>
       </BrowserRouter>
     </>
