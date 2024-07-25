@@ -1,12 +1,17 @@
 import Tarjeta from "./Tarjeta";
 import "./Granjas.css";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function Granjas() {
     const [granjas, setGranjas] = useState([]);
-  
+    const [nombre, setNombre] = useState('');
+    const params = new URLSearchParams(location.search);
+    const urlParams = useParams();
+
     useEffect(() => {
-      fetchGranjas();
+        fetchGranjas();
+        setNombre(params.get("nombre"));
     }, []);
 
     const fetchGranjas = async () => {
@@ -27,10 +32,13 @@ function Granjas() {
 
     return (
         <div id="tablero">
-            <h2>Granjas de </h2>
+            <h2>Granjas de {nombre}</h2>
             <div id="contenedor-granjas">
-                <Tarjeta />
-                <Tarjeta />
+                {granjas.map(granja => {
+                    return  <Tarjeta
+                                info={granja}
+                            />
+                })}
             </div>
         </div>
     );
