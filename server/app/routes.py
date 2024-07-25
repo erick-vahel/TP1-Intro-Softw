@@ -72,6 +72,22 @@ def granjas():
 
 
 
+@app.route('/granjas/<int:id>', methods=['DELETE'])
+def eliminar_granja(id):
+    try:
+        granja = Granjas.query.get(id)
+        if granja:
+            db.session.delete(granja)
+            db.session.commit()
+            return jsonify({'mensaje': 'granja eliminada correctamente'}), 200
+        else:
+            return jsonify({'error': 'granja no encontrada'}), 404
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': 'Error al eliminar granja', 'detalles': str(e)}), 500
+
+
+
 @app.route('/granjas/<int:id>', methods=['GET'])
 def granjas_de_usuario(id):
     try:
@@ -99,7 +115,7 @@ def granjas_de_usuario(id):
             } for row in query]
             return jsonify(granjas), 200
         else:
-            return jsonify({'error': 'Error al obtener granjas de usuario'}), 404
+            return  "", 204
     except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({'error': 'Error al buscar granjas de usuario', 'detalles': str(e)}), 500
