@@ -71,6 +71,42 @@ def granjas():
     return jsonify(granjas_list)
 
 
+
+@app.route('/granjas/<int:id>', methods=['GET'])
+def granjas_de_usuario(id):
+    try:
+        query = db.session.query(
+            Usuarios.id.label('usuario_id'),
+            Usuarios.nombre.label('nombre_usuario'),
+            Usuarios.monedas,
+            Usuarios.fecha_registro.label('fecha_registro_usuario'),
+            Granjas.id.label('granja_id'),
+            Granjas.fecha_registro.label('fecha_registro_granja')
+        ).join(
+            Granjas, Usuarios.id == Granjas.usuario_id
+        ).filter(
+            Usuarios.id == id
+        ).all()
+
+        if query:
+            granjas = [{
+                'usuario_id': row.usuario_id,
+                'nombre_usuario': row.nombre_usuario,
+                'monedas': row.monedas,
+                'fecha_registro_usuario': row.fecha_registro_usuario,
+                'granja_id': row.granja_id,
+                'fecha_registro_granja': row.fecha_registro_granja
+            } for row in query]
+            return jsonify(granjas), 200
+        else:
+            return jsonify({'error': 'Error al obtener granjas de usuario'}), 404
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': 'Error al buscar granjas de usuario', 'detalles': str(e)}), 500
+
+
+
+
 @app.route('/perfiles', methods=['GET'])
 def perfiles():
     entries = Usuarios.query.order_by(Usuarios.fecha_registro).all()
