@@ -4,6 +4,28 @@ import "./Tarjeta.css"
 import { useId } from 'react';
 
 function Tarjeta({info}) {
+
+  const eliminarGranja = async (id)=>{
+    const apiUrl = `http://127.0.0.1:5000/granjas/${id}`; 
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Error en db al eliminar granja');
+      }
+
+      // Aquí puedes manejar la respuesta si es necesario
+      console.log('Granja eliminada correctamente');
+    } catch (error) {
+      console.error('Error al eliminar granja:', error);
+    }
+}
+
   return (
     <Card className='tarjeta-granja' style={{ width: '18rem' }}>
       <Card.Img variant="top" src="holder.js/100px180" />
@@ -18,7 +40,7 @@ function Tarjeta({info}) {
         </div>
         <div className="botones">
           <Button disabled={true} variant="primary">Entrar</Button>
-          <Button disabled={true} variant="outline-danger">Eliminar</Button>
+          <Button onClick={()=>eliminarGranja(info.granja_id)} variant="outline-danger">Eliminar</Button>
         </div>
 
       </Card.Body>
