@@ -84,8 +84,9 @@ const Perfiles = () => {
                 <h4>{user.nombre}</h4>
                 <p>Monedas: {user.monedas}</p>
                 <p>Fecha de Registro: {user.fecha_registro}</p>
-                <Link className='btn btn-primary' to={`/registro/${user.id}?nombre=${user.nombre}`}>Renombrar</Link>
-                <Button onClick={()=>agregarGranja(user.id)} variant="outline-secondary">Agregar granja</Button>
+                <Link className='btn btn-outline-secondary' to={`/registro/${user.id}?nombre=${user.nombre}`}>Renombrar</Link>
+                <Button onClick={()=>agregarGranja(user.id)} variant="outline-primary">Agregar granja</Button>
+                <Link className='btn btn-outline-success' to={`/granjas/${user.id}?nombre=${user.nombre}`}>Ver granjas</Link>
                 <Button onClick={()=>eliminarUsuario(user.id)} variant="outline-danger">Eliminar</Button>
               </div>
             </div>

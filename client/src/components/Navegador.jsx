@@ -12,7 +12,7 @@ function Navegador() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Link className='nav-link' to={"/registro"}>Registrarse</Link>
-            <Link className='nav-link' to={"/perfiles"}>Perfiles</Link>
+            {/* <Link className='nav-link' to={"/perfiles"}>Perfiles</Link> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

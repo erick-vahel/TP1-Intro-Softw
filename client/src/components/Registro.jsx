@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {useLocation, useNavigate,  useParams} from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Registro = () => {
   const [nombre, setNombre] = useState('');
@@ -36,7 +35,7 @@ const Registro = () => {
 
       // Aquí puedes manejar la respuesta si es necesario
       console.log('Usuario creado correctamente');
-      navigate('/perfiles');
+      navigate('/');
     } catch (error) {
       console.error('Error al crear usuario:', error);
     }
@@ -64,7 +63,7 @@ const Registro = () => {
 
       // Aquí puedes manejar la respuesta si es necesario
       console.log('Usuario modificado correctamente');
-      navigate('/perfiles');
+      navigate('/');
     } catch (error) {
       console.error('Error al modificar usuario:', error);
     }

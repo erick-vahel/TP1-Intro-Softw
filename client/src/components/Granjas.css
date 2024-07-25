@@ -1,6 +1,6 @@
 
 #tablero{
-    opacity: 0.3;
+    background-color: rgb(242, 248, 242);
 }
 
 #tablero > h2 {
