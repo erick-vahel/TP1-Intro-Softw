@@ -9,6 +9,10 @@
 - para ingresar a db
     1. psql -U erick_db -d juego -W
 
+- actualizar modelos en db
+    1. flask db migrate -m "msj"
+    1. flask db upgrade
+
 
 - join by id
 
@@ -18,3 +22,4 @@
     JOIN granjas g ON u.id = g.usuario_id
     WHERE u.id = 1;  -- Aquí reemplaza 1 con el id del usuario específico que quieres consultar
     `
+
