@@ -1,9 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import "./Tarjeta.css"
-import { useId } from 'react';
+import { useContext } from 'react';
+import { GranjasContext } from '../context/GranjasContext';
 
 function Tarjeta({info}) {
+
+  const {decrementarCantGranjas} = useContext(GranjasContext);
 
   const eliminarGranja = async (id)=>{
     const apiUrl = `http://127.0.0.1:5000/granjas/${id}`; 
@@ -21,6 +24,7 @@ function Tarjeta({info}) {
 
       // Aquí puedes manejar la respuesta si es necesario
       console.log('Granja eliminada correctamente');
+      decrementarCantGranjas();
     } catch (error) {
       console.error('Error al eliminar granja:', error);
     }
