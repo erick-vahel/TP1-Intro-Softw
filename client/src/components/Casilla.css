@@ -1,0 +1,7 @@
+.casilla{
+    width: 100px;
+    height: 100px;
+    background-color: rgb(209, 182, 159);
+    border: 1px solid rgb(73, 71, 71);
+    margin: 0.5px;
+}

@@ -1,0 +1,13 @@
+#contenedor-granja-administrar{
+    display: grid;
+    place-content: center;
+    background-color: rgb(250, 249, 228);
+}
+
+
+#granja-interfaz{
+    display: grid;
+    place-items: center;
+    margin: 10vh 0px;
+}
+

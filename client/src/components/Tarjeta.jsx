@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import "./Tarjeta.css"
 import { useContext } from 'react';
 import { GranjasContext } from '../context/GranjasContext';
+import { Link } from 'react-router-dom';
 
 function Tarjeta({info}) {
 
@@ -37,13 +38,13 @@ function Tarjeta({info}) {
         <Card.Title>Granja #{info.granja_id} <span id='titulo-propietario'> Propietario #{info.usuario_id} </span></Card.Title>
         <div className='detalles'>
           <ul >
-            <li>Cultivos</li>
-            <li>Sin cosechar</li>
-            <li>Proxima cosecha</li>
+            <li>Cultivos N</li>
+            <li>Sin cosechar M</li>
+            <li>Proxima cosecha T</li>
           </ul>
         </div>
         <div className="botones">
-          <Button disabled={true} variant="primary">Entrar</Button>
+          <Link className='btn btn-success' to={`/granjas/${info.granja_id}/administrar`}>Entrar</Link>
           <Button onClick={()=>eliminarGranja(info.granja_id)} variant="outline-danger">Eliminar</Button>
         </div>
 
