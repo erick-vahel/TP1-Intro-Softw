@@ -1,13 +1,20 @@
 #contenedor-granja-administrar{
     display: grid;
-    place-content: center;
     background-color: rgb(250, 249, 228);
 }
-
-
-#granja-interfaz{
-    display: grid;
-    place-items: center;
-    margin: 10vh 0px;
+#contenedor-granja-administrar>h2{
+    text-align: center;
 }
 
+#granja-interfaz{
+    margin: 5vh 0px;
+    display: grid;
+    place-items: center;
+}
+
+#opciones-cultivo{
+    display: grid;
+    justify-content: center;
+
+    margin-top: 3vh;
+}

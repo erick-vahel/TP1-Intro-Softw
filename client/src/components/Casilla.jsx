@@ -1,6 +1,7 @@
 import "./Casilla.css"
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CultivosContext } from "../context/CultivosContext";
 
 
 const IMG_OPC_CULT_1 = "https://cdn-icons-png.flaticon.com/512/1514/1514935.png";
@@ -15,14 +16,17 @@ const OPC_CULTIVOS = [
 
 
 function Casilla() {
-  const [opcActual, setOpcActual] = useState(2);
+  const [opcActual, setOpcActual] = useState(0);
+  const {asignarCultivoEn} = useContext(CultivosContext); 
 
   /**
    * Muestra la siguiente opcion para cultivar
    * @param {HTMLButtonElement} btn casilla en la granja a modificar
    */
-  function mostrarSiguiente() {
+  function mostrarSiguiente(e) {
     opcActual<(OPC_CULTIVOS.length-1)?setOpcActual((prevState)=>++prevState):setOpcActual(0);
+    asignarCultivoEn();
+    console.log(e);
   }
 
   return (

@@ -6,6 +6,7 @@ import Granjas from './components/Granjas';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { GranjasProvider } from './context/GranjasContext';
 import Granja from './components/Granja';
+import { CultivosProvider } from './context/CultivosContext';
 
 function App() {
 
@@ -22,7 +23,11 @@ function App() {
               <Granjas />
             </GranjasProvider>
           } />
-          <Route path="/granjas/:id/administrar" element={<Granja />} />
+          <Route path="/granjas/:id/administrar" element={
+            <CultivosProvider>
+              <Granja />
+            </CultivosProvider>
+          } />
           <Route path="/" element={<Perfiles />} />
         </Routes>
       </BrowserRouter>
