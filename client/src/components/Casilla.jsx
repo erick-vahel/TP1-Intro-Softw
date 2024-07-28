@@ -1,6 +1,6 @@
 import "./Casilla.css"
 import Button from "react-bootstrap/Button";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CultivosContext } from "../context/CultivosContext";
 
 
@@ -15,23 +15,37 @@ const OPC_CULTIVOS = [
 ]
 
 
-function Casilla() {
+function Casilla({codigoCultivo,id}) {
   const [opcActual, setOpcActual] = useState(0);
   const {asignarCultivoEn} = useContext(CultivosContext); 
+
+  useEffect(()=>{
+    console.log(codigoCultivo);
+    if (codigoCultivo!==-1) {
+      setOpcActual(codigoCultivo);
+    }
+  },[codigoCultivo]);
 
   /**
    * Muestra la siguiente opcion para cultivar
    * @param {HTMLButtonElement} btn casilla en la granja a modificar
    */
   function mostrarSiguiente(e) {
+    const pos = id.split("-");
     opcActual<(OPC_CULTIVOS.length-1)?setOpcActual((prevState)=>++prevState):setOpcActual(0);
-    asignarCultivoEn();
+    asignarCultivoEn(pos[1], pos[2], opcActual);
     console.log(e);
   }
 
   return (
     <>
-        <Button onClick={mostrarSiguiente} className='casilla' variant=" btn-outline-warning">
+        <Button
+         onClick={mostrarSiguiente} 
+         className='casilla' 
+         variant=" btn-outline-warning"
+         id={id}
+        >
+        
           <img className="cultivo-icono" src={OPC_CULTIVOS[opcActual]} alt="opc-img-cultivo" />
         </Button>
     </>

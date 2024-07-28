@@ -31,6 +31,8 @@ class Granjas(db.Model):
 class Cultivos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tipo_cultivo = db.Column(db.SmallInteger, CheckConstraint('tipo_cultivo >= 0 AND tipo_cultivo <= 9'))
+    fila = db.Column(db.SmallInteger, CheckConstraint('fila >= 0 AND fila <= 2'))
+    col = db.Column(db.SmallInteger, CheckConstraint('col >= 0 AND col <= 2'))
     fecha_plantacion = db.Column(db.TIMESTAMP, default=datetime.utcnow)
     fecha_cosecha = db.Column(db.TIMESTAMP, default=lambda: datetime.utcnow() + timedelta(minutes=3))
     cosechar = db.Column(db.Boolean, default=False)

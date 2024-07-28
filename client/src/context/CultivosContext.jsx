@@ -3,10 +3,27 @@ import React, { createContext, useState } from 'react';
 const CultivosContext = createContext();
 
 const CultivosProvider = ({ children }) => {
-  const [cultivos, setCultivos] = useState([[1,1,1], [1,1,1], [1,1,1]]);
+  const [cultivos, setCultivos] = useState([[0,0,0], [0,0,0], [0,0,0]]);
 
   function asignarCultivoEn(fila, col, tipoCultiv) {
-    setCultivos((prevState) => prevState[fila][col] = tipoCultiv);
+    console.log(fila, col, tipoCultiv);
+    setCultivos((prevState) => {
+      const auxMatrix = [...prevState];
+      auxMatrix[fila][col] = tipoCultiv
+      return auxMatrix;
+    });
+    console.log(cultivos);
+  }
+
+
+  function configurarCultivos(config) {
+    setCultivos((prevState) => {
+      const auxMatrix = [...prevState];
+      config.forEach(cultivo => {
+        auxMatrix[cultivo.fila][cultivo.col] = cultivo.tipo_cultivo
+      });
+      return auxMatrix;
+    });
     console.log(cultivos);
   }
 
@@ -15,7 +32,9 @@ const CultivosProvider = ({ children }) => {
    * @param {Array<Array<Number>>} config de cultivos detectados
    */
   function actualizarCultivos(config) {
-    setCultivos(config);
+    if (config.length) {
+      configurarCultivos(config);
+    }
   }
 
   return (

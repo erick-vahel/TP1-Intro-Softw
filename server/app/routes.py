@@ -122,6 +122,47 @@ def granjas_de_usuario(id):
         return jsonify({'error': 'Error al buscar granjas de usuario', 'detalles': str(e)}), 500
 
 
+@app.route('/granjas/<int:id>/cultivos', methods=['GET'])
+def cultivos_en_granja(id):
+    try:
+        # Query para obtener los cultivos asociados a una granja específica
+        query = db.session.query(
+            Granjas.id.label('granja_id'),
+            Granjas.fecha_registro.label('fecha_registro_granja'),
+            Cultivos.id.label('cultivo_id'),
+            Cultivos.tipo_cultivo,
+            Cultivos.fila,
+            Cultivos.col,
+            Cultivos.fecha_plantacion,
+            Cultivos.fecha_cosecha,
+            Cultivos.cosechar
+        ).join(
+            Cultivos, Granjas.id == Cultivos.granja_id
+        ).filter(
+            Granjas.id == id
+        ).all()
+
+        if query:
+            cultivos = [{
+                'granja_id': row.granja_id,
+                'fecha_registro_granja': row.fecha_registro_granja,
+                'cultivo_id': row.cultivo_id,
+                'tipo_cultivo': row.tipo_cultivo,
+                'fila': row.fila,
+                'col': row.col,
+                'fecha_plantacion': row.fecha_plantacion,
+                'fecha_cosecha': row.fecha_cosecha,
+                'cosechar': row.cosechar
+            } for row in query]
+            return jsonify(cultivos), 200
+        else:
+            return jsonify(query), 200
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': 'Error al buscar cultivos de granja', 'detalles': str(e)}), 500
+
+
+
 
 @app.route('/cultivos/registro', methods=['POST'])
 def registrarCultivo():
@@ -129,7 +170,9 @@ def registrarCultivo():
         data = request.json
         param_id = data['id']
         param_tipo_cultivo = data['tipo_cultivo']
-        new_entry = Cultivos(usuario_id=param_id, tipo_cultivo=param_tipo_cultivo)
+        param_fila = data['fila']
+        param_col = data['col']
+        new_entry = Cultivos(granja_id=param_id, tipo_cultivo=param_tipo_cultivo, fila = param_fila, col = param_col)
         db.session.add(new_entry)
         db.session.commit()
         return jsonify({'message': 'Nuevo cultivo agregado para'+str(data['id'])}), 201
