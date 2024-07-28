@@ -16,11 +16,11 @@ CREATE TABLE granjas (
 
 
 -- 1-zanahoria, 2-lechuga, 3-sandia
-CREATE TABLE casillas (
+CREATE TABLE cultivo (
     id SERIAL PRIMARY KEY,
-    tipo_cultivo VARCHAR(100) NOT NULL,
+    tipo_cultivo SMALLINT CHECK (numero >= 0 AND numero <= 9),
     fecha_plantacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_cosecha TIMESTAMP DEFAULT (CURRENT_TIMESTAMP + INTERVAL '3 minutes')
-    -- estado cosecha
+    cosechar BOOLEAN DEFAULT FALSE
     granja_id INT REFERENCES granjas(id) ON DELETE CASCADE,
 );
