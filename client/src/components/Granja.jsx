@@ -31,7 +31,6 @@ function Granja() {
       } else if (response.status !== 204) {
         data = await response.json();
       }
-      console.log(data);
       actualizarCultivos(data); // Actualiza el estado con los usuarios recibidos
     } catch (error) {
       console.error('Error al solicitar cultivos:', error);
@@ -74,9 +73,7 @@ function Granja() {
   }
 
   function generarFilas() {
-    console.log(cultivos);
     return cultivos.map((filaCultv, f) => {
-      console.log(filaCultv);
       return (
         <Row key={`${ID}-${f}`}>
           {generarCultivos(filaCultv, f)}

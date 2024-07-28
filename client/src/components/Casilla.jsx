@@ -20,10 +20,11 @@ function Casilla({codigoCultivo,id}) {
   const {asignarCultivoEn} = useContext(CultivosContext); 
 
   useEffect(()=>{
-    console.log(codigoCultivo);
+    console.log("codig cultivo detectado ", codigoCultivo);
     if (codigoCultivo!==-1) {
       setOpcActual(codigoCultivo);
     }
+    console.log(opcActual);
   },[codigoCultivo]);
 
   /**
@@ -32,9 +33,10 @@ function Casilla({codigoCultivo,id}) {
    */
   function mostrarSiguiente(e) {
     const pos = id.split("-");
+    console.log("opc al cambiar img", opcActual);//****REVISAR */
     opcActual<(OPC_CULTIVOS.length-1)?setOpcActual((prevState)=>++prevState):setOpcActual(0);
+    console.log("opc luego cambiar img", opcActual);
     asignarCultivoEn(pos[1], pos[2], opcActual);
-    console.log(e);
   }
 
   return (

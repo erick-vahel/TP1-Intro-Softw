@@ -3,7 +3,7 @@ import React, { createContext, useState } from 'react';
 const CultivosContext = createContext();
 
 const CultivosProvider = ({ children }) => {
-  const [cultivos, setCultivos] = useState([[0,0,0], [0,0,0], [0,0,0]]);
+  const [cultivos, setCultivos] = useState([[-1,-1,-1], [-1,-1,-1], [-1,-1,-1]]);
 
   function asignarCultivoEn(fila, col, tipoCultiv) {
     console.log(fila, col, tipoCultiv);
@@ -24,7 +24,6 @@ const CultivosProvider = ({ children }) => {
       });
       return auxMatrix;
     });
-    console.log(cultivos);
   }
 
   /**
