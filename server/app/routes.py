@@ -3,6 +3,7 @@ from flask import request, jsonify
 from app import db
 from app.models import Usuarios
 from app.models import Granjas
+from app.models import Cultivos
 from sqlalchemy.exc import SQLAlchemyError
 # from app import create_app
 
@@ -120,6 +121,52 @@ def granjas_de_usuario(id):
         db.session.rollback()
         return jsonify({'error': 'Error al buscar granjas de usuario', 'detalles': str(e)}), 500
 
+
+
+@app.route('/cultivos/registro', methods=['POST'])
+def registrarCultivo():
+    try:
+        data = request.json
+        param_id = data['id']
+        param_tipo_cultivo = data['tipo_cultivo']
+        new_entry = Cultivos(usuario_id=param_id, tipo_cultivo=param_tipo_cultivo)
+        db.session.add(new_entry)
+        db.session.commit()
+        return jsonify({'message': 'Nuevo cultivo agregado para'+str(data['id'])}), 201
+    except KeyError as e:
+        db.session.rollback()
+        return jsonify({'error': 'Faltan datos requeridos', 'detalles': str(e)}), 400
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': 'Error al crear cultivo', 'detalles': str(e)}), 500
+
+
+@app.route('/cultivos', methods=['GET'])
+def cultivos():
+    entries = Cultivos.query.order_by(Cultivos.fecha_plantacion).all()
+    cultivos_list = []
+    target_timezone = pytz.timezone('America/Argentina/Buenos_Aires') 
+    for cultivo in entries:
+        if cultivo.fecha_plantacion & cultivo.fecha_cosecha:
+            utc_date_plant = cultivo.fecha_plantacion.replace(tzinfo=pytz.utc)
+            localized_date_plant = utc_date_plant.astimezone(target_timezone)
+            fecha_formateada_plant = localized_date_plant.strftime('%Y-%m-%d %H:%M:%S')
+
+            utc_date_cos = cultivo.fecha_cosecha.replace(tzinfo=pytz.utc)
+            localized_date_cos = utc_date_cos.astimezone(target_timezone)
+            fecha_formateada_cos = localized_date_cos.strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            fecha_formateada_plant = None
+            fecha_formateada_cos = None
+        
+        cultivo_data = {
+            'id': cultivo.id,
+            'fecha_plantacion': fecha_formateada_plant,
+            'fecha_cosecha': fecha_formateada_cos,
+            'granja_id':cultivo.granja_id
+        }
+        cultivos_list.append(cultivo_data)
+    return jsonify(cultivos_list)
 
 
 
