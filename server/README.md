@@ -13,6 +13,8 @@
     1. flask db migrate -m "msj"
     1. flask db upgrade
 
+- actualizar requisitos 
+    1. pip freeze > requirements.txt
 
 - join by id
 
