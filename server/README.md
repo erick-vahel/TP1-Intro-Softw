@@ -4,6 +4,7 @@
 - inicializar
     1. source venv/bin/activate
     1. pip install -r requirements.txt
+    1. flask db init
     1. deactivate
 
 - para ingresar a db
